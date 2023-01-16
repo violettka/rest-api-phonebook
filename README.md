@@ -13,5 +13,5 @@ Cucumber
 # Run Tests
 mvn test
 
-# Contributors Violeta
-Abramova abramova.violetta@gmail.com
+# Contributors
+Violeta Abramova abramova.violetta@gmail.com
