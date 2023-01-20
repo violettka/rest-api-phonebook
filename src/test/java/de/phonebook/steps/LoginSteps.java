@@ -1,20 +1,13 @@
 package de.phonebook.steps;
 
-import de.phonebook.APIHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 import static de.phonebook.Constants.BASE_URL;
 
-public class LoginSteps {
-    APIHelper apiHelper = new APIHelper();
-    private RequestSpecification request;
-    private static Response response;
-    private static String payload;
+public class LoginSteps extends BaseSteps{
 
     @Given("I have a valid user credentials")
     public void iHaveRandomUser(){
@@ -30,6 +23,14 @@ public class LoginSteps {
 
     @Then("I see the status code {}")
     public void iSeeTheStatusCode(Integer statusCode) {
-        response.then().statusCode(statusCode);
+        response.then().assertThat().statusCode(statusCode);
+    }
+
+    @Given("I have valid access token")
+    public void iHaveValidAccessToken(String endpoint) {
+        iHaveRandomUser();
+        iSendPOSTRequestToEndpoint("user/login");
+        iSeeTheStatusCode(200);
+        token = response.getHeader("Access-Token");
     }
 }
