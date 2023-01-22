@@ -11,7 +11,8 @@ public class LoginSteps extends BaseSteps{
 
     @Given("I have a valid user credentials")
     public void iHaveRandomUser(){
-        request = RestAssured.given().header("Content-Type", "application/json");
+        request = RestAssured.given()
+                .header("Content-Type", "application/json");
         payload = apiHelper.createUserPayload();
     }
 
@@ -26,11 +27,11 @@ public class LoginSteps extends BaseSteps{
         response.then().assertThat().statusCode(statusCode);
     }
 
-    @Given("I have valid access token")
-    public void iHaveValidAccessToken(String endpoint) {
+    @Given("I have a valid access token")
+    public void iHaveAValidAccessToken() {
         iHaveRandomUser();
         iSendPOSTRequestToEndpoint("user/login");
         iSeeTheStatusCode(200);
-        token = response.getHeader("Access-Token");
+        token =  response.getHeader("Access-Token");
     }
 }

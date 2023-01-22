@@ -1,7 +1,7 @@
 Feature: Contact API Endpoints
 
-    Scenario: Delete one contact
-        Given I have valid access token
-        And I add new contact
-        When I send DELETE request to 'contact/' endpoint
-        Then I see the status code 200
+  Scenario: Delete one contact
+    Given I have a valid access token
+    And I add new contact
+    When I send DELETE request to 'contact/' endpoint
+    Then I see the status code 200

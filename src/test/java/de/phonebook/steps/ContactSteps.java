@@ -16,7 +16,7 @@ public class ContactSteps extends BaseSteps{
         payload = apiHelper.createRandomContactPayload();
         response = request.body(payload).post(BASE_URL + "contact");
         response.then().assertThat().statusCode(201);
-        contactId = response.getBody().jsonPath().getString("id");
+        contactID = response.getBody().jsonPath().getString("id");
     }
 
     @When("I send DELETE request to '{}' endpoint")
@@ -24,6 +24,6 @@ public class ContactSteps extends BaseSteps{
         request = RestAssured.given()
                 .header("Content-Type", "application/json")
                 .header("Access-Token", token);
-        response = request.delete(BASE_URL + endpoint + contactId);
+        response = request.delete(BASE_URL + endpoint + contactID);
     }
 }
