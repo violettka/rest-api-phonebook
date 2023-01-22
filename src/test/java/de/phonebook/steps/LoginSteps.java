@@ -10,15 +10,12 @@ import io.restassured.specification.RequestSpecification;
 
 import static de.phonebook.Constants.BASE_URL;
 
-public class LoginSteps {
-    APIHelper apiHelper = new APIHelper();
-    private RequestSpecification request;
-    private static Response response;
-    private static String payload;
+public class LoginSteps extends BaseSteps{
 
     @Given("I have a valid user credentials")
     public void iHaveRandomUser(){
-        request = RestAssured.given().header("Content-Type", "application/json");
+        request = RestAssured.given()
+                .header("Content-Type", "application/json");
         payload = apiHelper.createUserPayload();
     }
 
@@ -30,6 +27,14 @@ public class LoginSteps {
 
     @Then("I see the status code {}")
     public void iSeeTheStatusCode(Integer statusCode) {
-        response.then().statusCode(statusCode);
+        response.then().assertThat().statusCode(statusCode);
+    }
+
+    @Given("I have a valid access token")
+    public void iHaveAValidAccessToken() {
+        iHaveRandomUser();
+        iSendPOSTRequestToEndpoint("user/login");
+        iSeeTheStatusCode(200);
+        token =  response.getHeader("Access-Token");
     }
 }
