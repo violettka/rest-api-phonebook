@@ -27,7 +27,7 @@ public class LoginSteps extends BaseSteps{
     }
 
     @Given("I have valid access token")
-    public void iHaveValidAccessToken(String endpoint) {
+    public void iHaveValidAccessToken() {
         iHaveRandomUser();
         iSendPOSTRequestToEndpoint("user/login");
         iSeeTheStatusCode(200);

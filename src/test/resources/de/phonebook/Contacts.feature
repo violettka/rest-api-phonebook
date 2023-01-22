@@ -9,5 +9,5 @@ Feature: Contact API Endpoints
     Scenario: Search for contact
         Given I have valid access token
         When I send GET request to 'contact/' endpoint
-        Then I get contact with name
+        Then I get contact with "Tim"
         Then I see the status code 200
