@@ -1,6 +1,7 @@
 package de.phonebook.steps;
 
 import de.phonebook.ContactPojo;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 
 import static de.phonebook.Constants.BASE_URL;
 
-public class ContactSteps extends BaseSteps {
+public class ContactSteps extends BaseSteps{
 
     @Given("I add new contact")
     public void iAddNewContact() {
@@ -21,7 +22,7 @@ public class ContactSteps extends BaseSteps {
         payload = apiHelper.createRandomContactPayload();
         response = request.body(payload).post(BASE_URL + "contact");
         response.then().assertThat().statusCode(201);
-        contactId = response.getBody().jsonPath().getString("id");
+        contactID = response.getBody().jsonPath().getString("id");
     }
 
     @When("I send DELETE request to '{}' endpoint")
@@ -44,7 +45,6 @@ public class ContactSteps extends BaseSteps {
         return response.getBody().jsonPath().getList("", ContactPojo.class);
     }
 
-
     @Then("I get contact with {}")
     public void iGetContactWithName(String name) {
         List<ContactPojo> allContacts = getContacts();
@@ -59,6 +59,5 @@ public class ContactSteps extends BaseSteps {
         List<ContactPojo> elt = getContacts().stream()
                 .filter(contactPojo -> name.equals(contactPojo.getFirstName()))
                 .collect(Collectors.toList());
-
     }
 }
