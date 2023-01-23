@@ -1,13 +1,21 @@
 Feature: Contact API Endpoints
 
     Scenario: Delete one contact
-        Given I have valid access token
-        And I add new contact
+        Given I have a valid access token
+        And I add random contact
         When I send DELETE request to 'contact/' endpoint
         Then I see the status code 200
 
-    Scenario: Search for contact
-        Given I have valid access token
+    Scenario: Delete many contacts
+        Given I have a valid access token
+        And I add a few 'Rex' contacts
         When I send GET request to 'contact/' endpoint
-        Then I get contact with "Tim"
         Then I see the status code 200
+
+        When I get id list of 'Rex' contacts
+        When I send DELETE request to 'contact/' endpoint
+        Then I see the status code 200
+
+        When I send GET request to 'contact/' endpoint
+        Then I see the status code 200
+        And I see none 'Rex' contacts

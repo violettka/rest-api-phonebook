@@ -1,63 +1,56 @@
 package de.phonebook.steps;
 
-import de.phonebook.ContactPojo;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.junit.jupiter.api.Assertions;
 
 import static de.phonebook.Constants.BASE_URL;
 
-public class ContactSteps extends BaseSteps{
+public class ContactSteps extends BaseSteps {
 
-    @Given("I add new contact")
-    public void iAddNewContact() {
-        request = RestAssured.given()
-                .header("Content-Type", "application/json")
-                .header("Access-Token", token);
+    @Given("I add random contact")
+    public void iAddRandomContact() {
+        request = apiHelper.createBaseRequestWithToken(token);
         payload = apiHelper.createRandomContactPayload();
         response = request.body(payload).post(BASE_URL + "contact");
         response.then().assertThat().statusCode(201);
-        contactID = response.getBody().jsonPath().getString("id");
+        idList.add(response.getBody().jsonPath().getString("id"));
     }
 
     @When("I send DELETE request to '{}' endpoint")
     public void iSendDELETERequestToContactEndpoint(String endpoint) {
-        request = RestAssured.given()
-                .header("Content-Type", "application/json")
-                .header("Access-Token", token);
-        response = request.delete(BASE_URL + endpoint + contactId);
+        request = apiHelper.createBaseRequestWithToken(token);
+        for (int i = 0; i < idList.size(); i++) {
+            String contactsID = String.valueOf(idList.get(i));
+            response = request.delete(BASE_URL + endpoint + contactsID);
+        }
     }
 
     @When("I send GET request to '{}' endpoint")
     public void iSendGETRequestToContactsEndpoint(String endpoint) {
-        request = RestAssured.given()
-                .header("Content-Type", "application/json")
-                .header("Access-Token", token);
+        request = apiHelper.createBaseRequestWithToken(token);
         response = request.body(payload).when().get(BASE_URL + endpoint);
     }
 
-    public static List<ContactPojo> getContacts() {
-        return response.getBody().jsonPath().getList("", ContactPojo.class);
+    @Given("I add a few '{}' contacts")
+    public void iAddAFewContacts(String lastname) {
+        request = apiHelper.createBaseRequestWithToken(token);
+        payload = apiHelper.createContactPayload(lastname);
+        for (int i = 0; i < 3; i++) {
+            response = request.body(payload).post(BASE_URL + "contact");
+            response.then().assertThat().statusCode(201);
+        }
     }
 
-    @Then("I get contact with {}")
-    public void iGetContactWithName(String name) {
-        List<ContactPojo> allContacts = getContacts();
-        ContactPojo elt = allContacts.stream()
-                .filter(contactPojo -> name.equals(contactPojo.getFirstName()))
-                .findAny()
-                .orElse(null);
-        contactId = response.getBody().jsonPath().getString("id");
+    @When("I get id list of '{}' contacts")
+    public void iGetIdListOfContacts(String lastname) {
+        idList = response.jsonPath().getList("findAll { a -> a.lastName == '" + lastname + "' }.id");
     }
 
-    public void iGetAllContactsWithName(String name) {
-        List<ContactPojo> elt = getContacts().stream()
-                .filter(contactPojo -> name.equals(contactPojo.getFirstName()))
-                .collect(Collectors.toList());
+    @Then("I see none '{}' contacts")
+    public void iSeeAFewContacts(String lastname) {
+        iGetIdListOfContacts(lastname);
+        Assertions.assertTrue(idList.isEmpty());
     }
 }
