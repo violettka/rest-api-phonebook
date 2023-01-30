@@ -7,19 +7,23 @@ import io.restassured.RestAssured;
 
 import static de.phonebook.Constants.BASE_URL;
 
-public class LoginSteps extends BaseSteps{
+public class LoginSteps extends BaseSteps {
 
     @Given("I have a valid user credentials")
-    public void iHaveRandomUser(){
+    public void iHaveRandomUser() {
         request = RestAssured.given()
                 .header("Content-Type", "application/json");
         payload = apiHelper.createUserPayload();
     }
 
-
     @When("I send POST request to '{}' endpoint")
     public void iSendPOSTRequestToEndpoint(String endpoint) {
-        response = request.body(payload).when().post(BASE_URL + endpoint);
+        if (endpoint.equals("user/login")) {
+            response = request.body(payload).when().post(BASE_URL + endpoint);
+        } else {
+            authRequest = apiHelper.createBaseRequestWithToken(token);
+            response = authRequest.body(payload).when().post(BASE_URL + endpoint);
+        }
     }
 
     @Then("I see the status code {}")
@@ -32,6 +36,6 @@ public class LoginSteps extends BaseSteps{
         iHaveRandomUser();
         iSendPOSTRequestToEndpoint("user/login");
         iSeeTheStatusCode(200);
-        token =  response.getHeader("Access-Token");
+        token = response.getHeader("Access-Token");
     }
 }

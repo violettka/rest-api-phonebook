@@ -38,4 +38,11 @@ public class APIHelper {
         payload.addProperty("description", faker.pokemon().name());
         return payload.toString();
     }
+
+    public String createRandomPhoneNumberPayload(int contactId) {
+        payload.addProperty("countryCode", "+49");
+        payload.addProperty("phoneNumber", faker.phoneNumber().subscriberNumber(8));
+        payload.addProperty("contactId", contactId);
+        return payload.toString();
+    }
 }
