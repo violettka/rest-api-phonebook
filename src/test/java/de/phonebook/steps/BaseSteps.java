@@ -11,6 +11,7 @@ public class BaseSteps {
 
     public APIHelper apiHelper = new APIHelper();
     public RequestSpecification request;
+    public RequestSpecification authRequest;
     public static Response response;
     public static String payload;
     public static String token;
