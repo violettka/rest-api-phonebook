@@ -45,4 +45,27 @@ public class APIHelper {
         payload.addProperty("contactId", contactId);
         return payload.toString();
     }
+
+    public String createRandomEmailPayload(int contactId) {
+        payload.addProperty("email", faker.internet().emailAddress());
+        payload.addProperty("contactId", contactId);
+        return payload.toString();
+    }
+
+    public String createRandomAddressPayload(int contactId) {
+        payload.addProperty("contactId", contactId);
+        payload.addProperty("country", "Germany");
+        payload.addProperty("street", "Kudamm");
+        payload.addProperty("city", "Berlin");
+        payload.addProperty("zip", faker.phoneNumber().subscriberNumber(3));
+        return payload.toString();
+    }
+
+    public String editContactPayload(int contactId) {
+        payload.addProperty("firstName", faker.name().firstName());
+        payload.addProperty("lastName", faker.name().lastName());
+        payload.addProperty("description", faker.pokemon().name());
+        payload.addProperty("id", contactId);
+        return payload.toString();
+    }
 }

@@ -1,6 +1,5 @@
 package de.phonebook.steps;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,7 +17,7 @@ public class ContactSteps extends BaseSteps {
         payload = apiHelper.createRandomContactPayload();
         response = authRequest.body(payload).post(BASE_URL + "contact");
         response.then().assertThat().statusCode(201);
-        idList= Arrays.asList(response.getBody().jsonPath().getString("id"));
+        idList = Arrays.asList(response.getBody().jsonPath().getString("id"));
     }
 
     @When("I send DELETE request to '{}' endpoint")
@@ -55,5 +54,17 @@ public class ContactSteps extends BaseSteps {
     public void iSeeAFewContacts(String lastname) {
         iGetIdListOfContacts(lastname);
         Assertions.assertTrue(idList.isEmpty());
+    }
+
+    @When("I send PUT request to '{}' endpoint")
+    public void iSendPUTRequestToContactEndpoint(String endpoint) {
+        request = apiHelper.createBaseRequestWithToken(token);
+        response = request.body(payload).when().put(BASE_URL + endpoint);
+    }
+
+    @When("I edit random contact")
+    public void iEditRandomContact() {
+
+        payload = apiHelper.editContactPayload(Integer.parseInt(idList.get(0)));
     }
 }
