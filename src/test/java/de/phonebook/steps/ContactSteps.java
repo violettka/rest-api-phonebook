@@ -64,7 +64,11 @@ public class ContactSteps extends BaseSteps {
 
     @When("I edit random contact")
     public void iEditRandomContact() {
-
         payload = apiHelper.editContactPayload(Integer.parseInt(idList.get(0)));
+    }
+
+    @Then("I see added random contact")
+    public void iSeeAddedRandomContact() {
+        response.then().assertThat().equals(BASE_URL + "contact");
     }
 }

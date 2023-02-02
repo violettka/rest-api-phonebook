@@ -16,3 +16,20 @@ Feature: Email
     Then I see the status code 201
     When I send DELETE request to 'contact/' endpoint
     Then I see the status code 200
+
+
+  Scenario: Edit email
+    Given I have a valid access token
+    And I add random contact
+    And I have random email
+    When I send POST request to 'email' endpoint
+    And I edit random email
+    When I send PUT request to 'email' endpoint
+    Then I see the status code 200
+
+
+  Scenario: Delete email
+    Given I have a valid access token
+    And I add random contact
+    And I have random email
+    When I send POST request to 'email' endpoint

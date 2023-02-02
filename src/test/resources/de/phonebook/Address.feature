@@ -16,3 +16,13 @@ Feature: Address
     Then I see the status code 201
     When I send DELETE request to 'contact/' endpoint
     Then I see the status code 200
+
+
+  Scenario: Edit one address
+    Given I have a valid access token
+    And I add random contact
+    And I edit random address
+    When I send PUT request to 'address' endpoint
+    Then I see the status code 200
+
+

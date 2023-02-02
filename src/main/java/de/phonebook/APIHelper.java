@@ -54,18 +54,43 @@ public class APIHelper {
 
     public String createRandomAddressPayload(int contactId) {
         payload.addProperty("contactId", contactId);
-        payload.addProperty("country", "Germany");
-        payload.addProperty("street", "Kudamm");
-        payload.addProperty("city", "Berlin");
+        payload.addProperty("country", faker.pokemon().name());
+        payload.addProperty("street", faker.pokemon().name());
+        payload.addProperty("city", faker.pokemon().name());
         payload.addProperty("zip", faker.phoneNumber().subscriberNumber(3));
         return payload.toString();
     }
 
-    public String editContactPayload(int contactId) {
+    public String editContactPayload(int id) {
         payload.addProperty("firstName", faker.name().firstName());
         payload.addProperty("lastName", faker.name().lastName());
         payload.addProperty("description", faker.pokemon().name());
-        payload.addProperty("id", contactId);
+        payload.addProperty("id", id);
+        return payload.toString();
+    }
+
+    public String editAddressPayload(int contactId) {
+        payload.addProperty("id", 96);
+        payload.addProperty("city", faker.pokemon().name());
+        payload.addProperty("country", faker.pokemon().name());
+        payload.addProperty("street", faker.pokemon().name());
+        payload.addProperty("zip", faker.phoneNumber().subscriberNumber(3));
+        payload.addProperty("contactId", contactId);
+        return payload.toString();
+    }
+
+    public String editPhoneNumberPayload(int contactId) {
+        payload.addProperty("id", faker.number().numberBetween(1,200));
+        payload.addProperty("countryCode", "+49");
+        payload.addProperty("phoneNumber", faker.phoneNumber().subscriberNumber(8));
+        payload.addProperty("contactId", contactId);
+        return payload.toString();
+    }
+
+    public String editEmailPayload(int contactId) {
+       payload.addProperty("id", faker.number().numberBetween(1,200));
+        payload.addProperty("email", faker.internet().emailAddress());
+        payload.addProperty("contactId", contactId);
         return payload.toString();
     }
 }

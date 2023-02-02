@@ -8,4 +8,9 @@ public class EmailSteps extends BaseSteps {
     public void iHaveRandomEmail() {
         payload = apiHelper.createRandomEmailPayload(Integer.parseInt(idList.get(0)));
     }
+
+    @When("I edit random email")
+    public void iEditRandomEmail() {
+        payload = apiHelper.editEmailPayload(Integer.parseInt(idList.get(0)));
+    }
 }
