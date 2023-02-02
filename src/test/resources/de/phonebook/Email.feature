@@ -1,6 +1,6 @@
 Feature: Email
 
-  Scenario: I add random email number
+  Scenario: I add random email
     Given I have a valid access token
     And I add random contact
     And I have random email
