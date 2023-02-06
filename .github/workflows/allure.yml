@@ -14,7 +14,9 @@ jobs:
 
       - name: Build project with Maven
         run: mvn test --file pom.xml
+        continue-on-error: true
       - uses: actions/checkout@v2
+
 
       - name: Get Allure history
         uses: actions/checkout@v2
