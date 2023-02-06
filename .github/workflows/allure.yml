@@ -17,7 +17,7 @@ jobs:
         continue-on-error: true
       - uses: actions/checkout@v2
       - name: Generate Allure Report
-        run: allure
+        run: allure generate allure-results --clean
         continue-on-error: true
       - uses: actions/checkout@v2
 

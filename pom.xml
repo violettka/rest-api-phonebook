@@ -76,6 +76,8 @@
                     <version>2.10.0</version>
                     <configuration>
                         <reportVersion>2.14.0</reportVersion>
+                        <outputDirectory>${basedir}/allure-results</outputDirectory>
+                        <allureResultsDirectory>${basedir}/allure-results</allureResultsDirectory>
                     </configuration>
                 </plugin>
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
