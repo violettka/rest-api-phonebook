@@ -22,6 +22,9 @@ public class LoginSteps extends BaseSteps{
 
     @When("I send POST request to '{}' endpoint")
     public void iSendPOSTRequestToEndpoint(String endpoint) {
+        request = RestAssured.given()
+                .header("Content-Type", "application/json");
+        payload = apiHelper.createUserPayload();
         response = request.body(payload).when().post(BASE_URL + endpoint);
     }
 

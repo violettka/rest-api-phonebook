@@ -5,6 +5,8 @@ import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.util.List;
+
 public class BaseSteps {
     public APIHelper apiHelper = new APIHelper();
     public RequestSpecification request;
@@ -12,6 +14,8 @@ public class BaseSteps {
     public static String payload;
     public static String token;
     public static String contactID;
+
+    public static List<String> idList;
 
 
 }
