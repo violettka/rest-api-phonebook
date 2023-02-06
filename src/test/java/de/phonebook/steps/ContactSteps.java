@@ -13,9 +13,9 @@ public class ContactSteps extends BaseSteps {
 
     @Given("I add random contact")
     public void iAddRandomContact() {
-        request = apiHelper.createBaseRequestWithToken(token);
+        authRequest = apiHelper.createBaseRequestWithToken(token);
         payload = apiHelper.createRandomContactPayload();
-        response = request.body(payload).post(BASE_URL + "contact");
+        response = authRequest.body(payload).post(BASE_URL + "contact");
         response.then().assertThat().statusCode(201);
         idList = Arrays.asList(response.getBody().jsonPath().getString("id"));
     }
@@ -54,5 +54,21 @@ public class ContactSteps extends BaseSteps {
     public void iSeeAFewContacts(String lastname) {
         iGetIdListOfContacts(lastname);
         Assertions.assertTrue(idList.isEmpty());
+    }
+
+    @When("I send PUT request to '{}' endpoint")
+    public void iSendPUTRequestToContactEndpoint(String endpoint) {
+        request = apiHelper.createBaseRequestWithToken(token);
+        response = request.body(payload).when().put(BASE_URL + endpoint);
+    }
+
+    @When("I edit random contact")
+    public void iEditRandomContact() {
+        payload = apiHelper.editContactPayload(Integer.parseInt(idList.get(0)));
+    }
+
+    @Then("I see added random contact")
+    public void iSeeAddedRandomContact() {
+        response.then().assertThat().equals(BASE_URL + "contact");
     }
 }
