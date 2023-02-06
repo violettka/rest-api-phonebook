@@ -5,6 +5,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
+import java.util.Arrays;
+
 import static de.phonebook.Constants.BASE_URL;
 
 public class ContactSteps extends BaseSteps {
@@ -15,7 +17,7 @@ public class ContactSteps extends BaseSteps {
         payload = apiHelper.createRandomContactPayload();
         response = request.body(payload).post(BASE_URL + "contact");
         response.then().assertThat().statusCode(201);
-        idList.add(response.getBody().jsonPath().getString("id"));
+        idList = Arrays.asList(response.getBody().jsonPath().getString("id"));
     }
 
     @When("I send DELETE request to '{}' endpoint")
@@ -36,7 +38,7 @@ public class ContactSteps extends BaseSteps {
     @Given("I add a few '{}' contacts")
     public void iAddAFewContacts(String lastname) {
         request = apiHelper.createBaseRequestWithToken(token);
-        payload = apiHelper.createContactPayload(lastname);
+        payload = apiHelper.createContactWithLastnamePayload(lastname);
         for (int i = 0; i < 3; i++) {
             response = request.body(payload).post(BASE_URL + "contact");
             response.then().assertThat().statusCode(201);

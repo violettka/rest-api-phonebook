@@ -26,13 +26,20 @@ public class APIHelper {
         return payload.toString();
     }
 
+    public String createRandomPhoneNumberPayload(int contactId) {
+        payload.addProperty("countryCode", "+49");
+        payload.addProperty("phoneNumber", faker.phoneNumber().subscriberNumber(8));
+        payload.addProperty("contactId", contactId);
+        return payload.toString();
+    }
+
     public RequestSpecification createBaseRequestWithToken(String token) {
         return RestAssured.given()
                 .header("Content-Type", "application/json")
                 .header("Access-Token", token);
     }
 
-    public String createContactPayload(String lastname) {
+    public String createContactWithLastnamePayload(String lastname) {
         payload.addProperty("firstName", faker.name().firstName());
         payload.addProperty("lastName", lastname);
         payload.addProperty("description", faker.pokemon().name());
