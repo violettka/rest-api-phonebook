@@ -1,0 +1,1 @@
+[{"uid":"8db4be07090abea0","name":"Bulk delete contacts","time":{"duration":2069},"status":"failed","severity":"normal"},{"uid":"455de6b396313ad6","name":"Delete one contact","time":{"duration":3628},"status":"passed","severity":"normal"},{"uid":"dae38db33c1a4ab9","name":"Login to Phonebook with valid credentials","time":{"duration":437},"status":"passed","severity":"normal"}]
