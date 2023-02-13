@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","","","496","","de.phonebook.PhonebookTest","","Login to Phonebook","","Login to Phonebook with valid credentials",""
+"passed","","","3857","","de.phonebook.PhonebookTest","","Contact API Endpoints","","Delete one contact",""
+"failed","","","2264","","de.phonebook.PhonebookTest","","Contact API Endpoints","","Bulk delete contacts",""
